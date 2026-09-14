@@ -1,10 +1,10 @@
 # SneppX Academy Syllabus
 
 ## Module 01 - Tensor engine
-Status: outlined (content draft + companion example + quiz, see `modules/module01.md`)
+Status: **published** (lesson + runnable example + 8-question quiz, all validated against `sneppx-alg` bindings)
 
 ## Module 02 - Autograd & nn
-Status: draft
+Status: **outlined** (lesson + runnable example + 8-question quiz, validated)
 
 ## Module 03 - Distributed training (NCCL/DDP/ZeRO)
 Status: draft
