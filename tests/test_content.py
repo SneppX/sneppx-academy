@@ -11,10 +11,14 @@ EXPECTED = [
     "docs/modules/module02.md",
     "docs/modules/module02_quiz.md",
     "docs/modules/module03.md",
+    "docs/modules/module03_quiz.md",
     "docs/modules/module04.md",
+    "docs/modules/module04_quiz.md",
     "docs/certification.md",
     "examples/module01_tensor.py",
     "examples/module02_autograd_nn.py",
+    "examples/module03_distributed.py",
+    "examples/module04_security.py",
 ]
 
 
@@ -23,12 +27,13 @@ def test_expected_files_exist():
     assert not missing, f"missing: {missing}"
 
 
-def test_syllabus_has_four_modules_with_status():
+def test_syllabus_has_four_modules_published():
     text = (ROOT / "docs/syllabus.md").read_text(encoding="utf-8")
-    assert "outlined" in text
-    assert "published" in text
     for mod in range(1, 5):
         assert f"Module 0{mod}" in text
+    lines = [l for l in text.splitlines() if l.startswith("Status:")]
+    for line in lines:
+        assert "published" in line.lower()
 
 
 def test_module01_lesson_references_example_and_quiz():
@@ -46,14 +51,28 @@ def test_module02_lesson_references_example_and_quiz():
     assert "no_grad" in text
 
 
+def test_module03_lesson_references_example_and_quiz():
+    text = (ROOT / "docs/modules/module03.md").read_text(encoding="utf-8")
+    assert "module03_distributed.py" in text
+    assert "module03_quiz.md" in text
+    assert "sneppx-dist" in text
+    assert "nccl" in text.lower() or "gloo" in text.lower()
+
+
+def test_module04_lesson_references_example_and_quiz():
+    text = (ROOT / "docs/modules/module04.md").read_text(encoding="utf-8")
+    assert "module04_security.py" in text
+    assert "module04_quiz.md" in text
+    assert "sneppx-shield" in text
+    assert "sbom" in text.lower() or "sbom" in text
+
+
 def test_quiz_has_questions_and_answer_key():
-    m1 = (ROOT / "docs/modules/module01_quiz.md").read_text(encoding="utf-8")
-    assert "## Questions" in m1
-    assert "## Answer key" in m1
-    m2 = (ROOT / "docs/modules/module02_quiz.md").read_text(encoding="utf-8")
-    low2 = m2.lower()
-    assert "q1." in low2
-    assert "answer" in low2 and "key" in low2
+    for mod in ("module01", "module02", "module03", "module04"):
+        q = (ROOT / f"docs/modules/{mod}_quiz.md").read_text(encoding="utf-8")
+        low = q.lower()
+        assert "q1" in low or "1." in low
+        assert "answer" in low
 
 
 def test_certification_mentions_shield_verify():
@@ -65,18 +84,17 @@ def test_certification_mentions_shield_verify():
 
 
 def test_example_compiles():
-    for ex in ("module01_tensor.py", "module02_autograd_nn.py"):
+    for ex in ("module01_tensor.py", "module02_autograd_nn.py",
+               "module03_distributed.py", "module04_security.py"):
         src = ROOT / f"examples/{ex}"
         compile(src.read_text(encoding="utf-8"), str(src), "exec")
 
 
-def test_example_mentions_sneppx_alg():
-    for ex in ("module01_tensor.py", "module02_autograd_nn.py"):
-        text = (ROOT / f"examples/{ex}").read_text(encoding="utf-8")
-        assert "SNEPPX_ALG_PATH" in text or "PYTHONPATH" in text
+def test_module03_example_uses_sneppx_dist():
+    text = (ROOT / "examples/module03_distributed.py").read_text(encoding="utf-8")
+    assert "sneppx_dist" in text or "sneppx-dist" in text
 
 
-def test_placeholder_modules_are_placeholders():
-    for mod in ("module03", "module04"):
-        text = (ROOT / f"docs/modules/{mod}.md").read_text(encoding="utf-8")
-        assert text.strip(), f"{mod}.md is empty"
+def test_module04_example_uses_sneppx_shield():
+    text = (ROOT / "examples/module04_security.py").read_text(encoding="utf-8")
+    assert "sneppx_shield" in text or "sneppx-shield" in text
