@@ -1,6 +1,6 @@
 # Module 01 - Tensor Engine with SneppX_ALG
 
-Status: **outlined** (learning content draft). Estimated: 2 hours.
+Status: **reviewed + published** (free content forever; certification paid add-on).
 
 ## 1. What is a tensor?
 
