@@ -1,5 +1,7 @@
 # Module 04: Security & Compliance
 
+Status: **reviewed**. Estimated: 2.0 hours.
+
 This module covers AI model security: Software Bill of Materials (SBOM), detached Ed25519 digital signatures, and automated compliance auditing using `sneppx-shield` and `sneppx-audits`.
 
 ## Key Concepts
