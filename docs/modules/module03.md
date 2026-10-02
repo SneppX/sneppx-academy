@@ -1,5 +1,7 @@
 # Module 03: Distributed Training
 
+Status: **reviewed**. Estimated: 2.5 hours.
+
 This module covers the principles of distributed AI training using NCCL/Gloo backends, and how to use the `sneppx-dist` CLI to manage training clusters.
 
 ## Key Concepts
