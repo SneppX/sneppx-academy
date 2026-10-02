@@ -1,6 +1,6 @@
 # Module 02 - Autograd & nn
 
-Status: **outlined**. Estimated: 3 hours.
+Status: **reviewed**. Estimated: 3 hours.
 
 ## 1. How autograd works
 
